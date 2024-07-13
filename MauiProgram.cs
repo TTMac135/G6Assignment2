@@ -15,7 +15,6 @@ namespace G6Assignment2
                 });
 
             builder.Services.AddMauiBlazorWebView();
-
 #if DEBUG
     		builder.Services.AddBlazorWebViewDeveloperTools();
     		builder.Logging.AddDebug();
