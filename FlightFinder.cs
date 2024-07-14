@@ -24,16 +24,18 @@ namespace G6Assignment2
             {
                 string[] flightInfo = flight.Split(',');
 
-                string flightCode = flightInfo[0];
-                string airline = flightInfo[1];
-                string origin = flightInfo[2];
-                string destination = flightInfo[3];
-                string day = flightInfo[4];
-                string time = flightInfo[5];
-                int cost = int.Parse(flightInfo[6]);
+                if (flightInfo.Length > 1 ) {
+                    string flightCode = flightInfo[0];
+                    string airline = flightInfo[1];
+                    string origin = flightInfo[2];
+                    string destination = flightInfo[3];
+                    string day = flightInfo[4];
+                    string time = flightInfo[5];
+                    int cost = int.Parse(flightInfo[6]);
 
-                Flight currentFlight = new Flight(flightCode, airline, origin, destination, day, time, cost);
-                flightObjects.Add(currentFlight);
+                    Flight currentFlight = new Flight(flightCode, airline, origin, destination, day, time, cost);
+                    flightObjects.Add(currentFlight);
+                }
             }
         }
 

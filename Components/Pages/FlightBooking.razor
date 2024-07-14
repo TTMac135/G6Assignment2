@@ -1,6 +1,6 @@
 ﻿@page "/FlightFinder"
-@inject FlightFinder FlightFinder
 @using G6Assignment2.ProblemDomain
+
 
 <h3>Flight Finder</h3>
 
@@ -9,17 +9,17 @@
 
         <div class="form-group">
             <label for="departureAirport">From:</label>
-            <input id="departureAirport" type="text" @bind="_origin"/>
+            <input id="departureAirport" type="text" @bind="origin"/>
         </div>
 
         <div class="form-group">
             <label for="arrivalAirport">To:</label>
-            <input id="arrivalAirport" type="text" @bind="_destination"/>
+            <input id="arrivalAirport" type="text" @bind="destination"/>
         </div>
 
         <div class="form-group">
             <label for="day">Day:</label>
-            <input id="day" type="text" @bind="_day"/>
+            <input id="day" type="text" @bind="day"/>
         </div>
 
         <button type="button" @onclick="FindFlightsButton">Find Flights</button>
@@ -129,16 +129,26 @@
 </style>
 
 @code {
-    private string _origin;
-    private string _destination;
-    private string _day;
+    private string origin;
+    private string destination;
+    private string day;
     private List<Flight> matchingFlights = new List<Flight>();
+    private FlightFinder flightFinder = new FlightFinder();
+    //Runs CreateFlights when page is loaded
     protected override void OnInitialized()
     {
-        FlightFinder.CreateFlights();
+        flightFinder.CreateFlights();
     }
+    //Runs FindFlights when button is clicked
     private void FindFlightsButton()
     {
-        matchingFlights = FlightFinder.findFlights(_origin, _destination, _day);
+        if (origin != null && destination != null && day != null)
+        {
+            //Cleaning user input
+            string origFixed = origin.ToUpper();
+            string destFixed = destination.ToUpper();
+            string dayFixed = char.ToUpper(day[0]) + day.Substring(1).ToLower();
+            matchingFlights = flightFinder.findFlights(origFixed, destFixed, dayFixed);
+        }
     }
 }
