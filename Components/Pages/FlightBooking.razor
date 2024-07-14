@@ -1,0 +1,154 @@
+﻿@page "/FlightFinder"
+@using G6Assignment2.ProblemDomain
+
+
+<h3>Flight Finder</h3>
+
+<div class="page">
+    <form class="form-group-finder">
+
+        <div class="form-group">
+            <label for="departureAirport">From:</label>
+            <input id="departureAirport" type="text" @bind="origin"/>
+        </div>
+
+        <div class="form-group">
+            <label for="arrivalAirport">To:</label>
+            <input id="arrivalAirport" type="text" @bind="destination"/>
+        </div>
+
+        <div class="form-group">
+            <label for="day">Day:</label>
+            <input id="day" type="text" @bind="day"/>
+        </div>
+
+        <button type="button" @onclick="FindFlightsButton">Find Flights</button>
+    </form>
+
+    <h4>Flights</h4>
+    <div class="scrollable-list">
+        <table>
+            <tbody>
+                @foreach (Flight flight in matchingFlights)
+                {
+                    <tr>
+                        <td>@flight.ToString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Reserve</h3>
+    <form class="form-group-reserve">
+        <label for="flightCode">Flight Code:</label>
+        <input id="flightCode" type="text" />
+
+        <label for="airline">Airline:</label>
+        <input id="airline" type="text" />
+
+        <label for="day">Day:</label>
+        <input id="day" type="text" />
+
+        <label for="time">Time:</label>
+        <input id="time" type="text" />
+
+        <label for="cost">Cost:</label>
+        <input id="cost" type="text" />
+
+        <label for="name">Name:</label>
+        <input id="name" type="text" />
+
+        <label for="citizenship">Citizenship:</label>
+        <input id="citizenship" type="text" />
+
+        <div class="button-container">
+            <button type="button">Reserve</button>
+        </div>   
+    </form>
+</div>
+
+<style>
+    h3, h4 {
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        position: sticky;
+    }
+
+    .page {
+        width: 100%;
+        height: 100%;
+    }
+
+    .form-group-finder {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .form-group-finder .form-group {
+        width: 25%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .form-group-finder button {
+        width: 23%;
+    }
+
+    .form-group-finder input {
+        width: 100%;
+    }
+
+    .form-group-reserve label, .form-group-reserve input {
+        display: block;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .button-container {
+        text-align: center;
+    }
+
+    .scrollable-list {
+        max-height: 300px;
+        overflow-y: visible;
+    }
+
+    button {
+        border-radius: 4px;
+        padding-left: 100px;
+        padding-right: 100px;
+        display: inline-block;
+        background-color: blue;
+        color: white;
+    }
+    
+</style>
+
+@code {
+    private string origin;
+    private string destination;
+    private string day;
+    private List<Flight> matchingFlights = new List<Flight>();
+    private FlightFinder flightFinder = new FlightFinder();
+    //Runs CreateFlights when page is loaded
+    protected override void OnInitialized()
+    {
+        flightFinder.CreateFlights();
+    }
+    //Runs FindFlights when button is clicked
+    private void FindFlightsButton()
+    {
+        if (origin != null && destination != null && day != null)
+        {
+            //Cleaning user input
+            string origFixed = origin.ToUpper();
+            string destFixed = destination.ToUpper();
+            string dayFixed = char.ToUpper(day[0]) + day.Substring(1).ToLower();
+            matchingFlights = flightFinder.findFlights(origFixed, destFixed, dayFixed);
+        }
+    }
+}
