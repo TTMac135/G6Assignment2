@@ -6,48 +6,17 @@ using System.Threading.Tasks;
 
 namespace G6Assignment2.ProblemDomain
 {
-    internal class Flight
+    internal class Flight : FlightManager
     {
-        private string _flightCode;
-        private string _airline;
+
         private string _origin;
         private string _destination;
-        private string _day;
-        private string _time;
-        private int _cost;
         
-        public Flight(string flightCode, string airline, string origin, string destination, string day, string time, int cost)
+        public Flight(string flightCode, string airline, string origin, string destination, string day, string time, int cost) 
+                      : base (flightCode, airline, day, time, cost)
         {
-            _flightCode = flightCode;
-            _airline = airline;
             _origin = origin;
             _destination = destination;
-            _day = day;
-            _time = time;
-            _cost = cost;
-        }
-
-        public string FlightCode
-        {
-            get { return _flightCode; }
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    _flightCode = value;
-                }
-            }
-        }
-        public string Airline
-        {
-            get { return _airline; }
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    _airline = value;
-                }
-            }
         }
 
         public string Origin
@@ -74,45 +43,9 @@ namespace G6Assignment2.ProblemDomain
             }
         }
 
-        public string Day
-        {
-            get { return _day; }
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    _day = value;
-                }
-            }
-        }
-
-        public string Time
-        {
-            get { return _time; }
-            set
-            {
-                if (!string.IsNullOrEmpty(value))
-                {
-                    _time = value;
-                }
-            }
-        }
-
-        public int Cost
-        {
-            get { return _cost; }
-            set
-            {
-                if (value >= 0)
-                {
-                    _cost = value;
-                }
-            }
-        }
-
         public override string ToString()
         {
-            return $"{_flightCode}, {_airline}, {_origin}, {_destination}, {_day}, {_time}, {_cost}";
+            return $"{FlightCode}, {Airline}, {Origin}, {Destination}, {Day}, {Time}, {Cost}";
         }
     }
 }
