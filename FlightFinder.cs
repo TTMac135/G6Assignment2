@@ -39,7 +39,8 @@ namespace G6Assignment2
             }
         }
 
-        //Iterates through the flight objects until it finds the user input origin, destination, and day
+        //Iterates through the flight objects until it finds the user input origin, destination, and or day
+        //Will only add objects to list if at least one input matches an objects origin, destination or day and the other input(s) are null
         //Returns list of matching objects
         public List<Flight> findFlights(string origin, string destination, string day)
         {
@@ -47,8 +48,29 @@ namespace G6Assignment2
 
             foreach (Flight flight in flightObjects)
             {
-                if (flight.Origin == origin && flight.Destination == destination && flight.Day == day)
+                bool matches = true;
+
+                if (origin != null && flight.Origin != origin)
+                {
+                    matches = false;
+                }
+                if (destination != null && flight.Destination != destination)
+                {
+                    matches = false;
+                }
+                if (day != null && flight.Day != day)
+                {
+                    matches = false;
+                }
+                if (origin == null && destination == null && day == null)
+                {
+                    matches = false;
+                }
+
+                if (matches)
+                {
                     matchingFlights.Add(flight);
+                }
             }
             return matchingFlights;
         }
