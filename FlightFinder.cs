@@ -31,9 +31,10 @@ namespace G6Assignment2
                     string destination = flightInfo[3];
                     string day = flightInfo[4];
                     string time = flightInfo[5];
-                    int cost = int.Parse(flightInfo[6]);
+                    string seats = flightInfo[6];
+                    int cost = int.Parse(flightInfo[7]);
 
-                    Flight currentFlight = new Flight(flightCode, airline, origin, destination, day, time, cost);
+                    Flight currentFlight = new Flight(flightCode, airline, origin, destination, day, time, seats, cost);
                     flightObjects.Add(currentFlight);
                 }
             }

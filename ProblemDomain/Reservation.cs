@@ -13,8 +13,8 @@ namespace G6Assignment2.ProblemDomain
         private string _citizenship;
         private bool _status;
 
-        public Reservation(string reservationCode, string flightCode, string airline, string day, string seats, int cost, string name, string citizenship, bool status)
-                          : base(flightCode, airline, day, seats, cost)
+        public Reservation(string reservationCode, string flightCode, string airline, string day, string time, string seats, int cost, string name, string citizenship, bool status)
+                          : base(flightCode, airline, day, time, seats, cost)
         {
             _reservationCode = reservationCode;
             _name = name;
@@ -66,6 +66,11 @@ namespace G6Assignment2.ProblemDomain
                 if (value == true || value == false)
                     _status = value;
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{ReservationCode}, {FlightCode}, {Airline}, {Day}, {Cost}, {Time}, {Name}, {Citizenship}, {Status}";
         }
     }
 }

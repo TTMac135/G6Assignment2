@@ -12,14 +12,16 @@ namespace G6Assignment2.ProblemDomain
         private string _flightCode;
         private string _airline;
         private string _day;
+        private string _time;
         private string _seats;
         private int _cost;
 
-        public FlightManager(string flightCode, string airline, string day, string seats, int cost)
+        public FlightManager(string flightCode, string airline, string day, string time, string seats, int cost)
         {
             _flightCode = flightCode;
             _airline = airline;
             _day = day;
+            _time = time;
             _seats = seats;
             _cost = cost;
         }
@@ -59,6 +61,18 @@ namespace G6Assignment2.ProblemDomain
             }
         }
 
+        public string Time
+        {
+            get { return _time; }
+            set
+            {
+                if (!string.IsNullOrEmpty(value))
+                {
+                    _time = value;
+                }
+            }
+        }
+
         public string Seats
         {
             get { return _seats; }
@@ -85,7 +99,7 @@ namespace G6Assignment2.ProblemDomain
 
         public override string ToString()
         {
-            return $"{_flightCode}, {_airline}, {_day}, {_seats}, {_cost}";
+            return $"{_flightCode}, {_airline}, {_day}, {_time}, {_seats}, {_cost}";
         }
 
 
