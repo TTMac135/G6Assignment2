@@ -1,21 +1,136 @@
 ﻿@page "/ReservationFinder"
 
-<h1>Find Reservation</h1>
+<h3>Find Reservation</h3>
 
-<form class="form-group">
+<div class="page">
+    <form class="form-group-reservation">
 
-    <label for="reservationCode">Reservation Code:</label>
-    <input id="reservationCode" type="text"/>
+        <div class="form-group">
+            <label for="reservationCode">Code:</label>
+            <input id="reservationCode" type="text" />
+        </div>
 
-    <label for="airline">Airline:</label>
-    <input id="airline" type="text"/>
+        <div class="form-group">
+            <label for="airline">Airline:</label>
+            <input id="airline" type="text" />
+        </div>
 
-    <label for="Name">Name:</label>
-    <input id="Name" type="text"/>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input id="name" type="text" />
+        </div>
 
-    <button type="submit">Find Reservations</button>
-</form>
+        <button type="button">Find Reservations</button>
+    </form>
 
+    <h4>Reservations</h4>
+    <div class="scrollable-list">
+        <table>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Reserve</h3>
+    <form class="form-group-reserve">
+        <div class="form-group">
+            <label for="reservationCode">Reservation Code:</label>
+            <input id="reservationCode" type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="flightCode">Flight Code:</label>
+            <input id="flightCode" type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="airline">Airline:</label>
+            <input id="airline" type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="cost">Cost:</label>
+            <input id="cost" type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input id="name" type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="citizenship">Citizenship:</label>
+            <input id="citizenship" type="text" />
+        </div>
+
+        <div class="form-group">
+            <label for="status">Status:</label>
+            <input id="status" type="text" />
+        </div>
+
+        <div class="button-container">
+            <button type="button">Save</button>
+        </div>
+    </form>
+</div>
+
+<style>
+    h3, h4 {
+        text-align: center;
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
+
+    .page {
+        width: 100%;
+        height: 100%;
+    }
+
+    .form-group-reservation {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .form-group-reservation .form-group {
+        width: 25%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .form-group-reservation button {
+        width: 23%;
+    }
+
+    .form-group input {
+        width: 100%;
+     }
+
+    .form-group-reserve label, .form-group-reserve input {
+        display: block;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .button-container {
+        text-align: center;
+    }
+
+    .scrollable-list {
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+
+    button {
+        border-radius: 4px;
+        padding-left: 100px;
+        padding-right: 100px;
+        display: inline-block;
+        background-color: blue;
+        color: white;
+    }
+</style>
 
 @code {
     
