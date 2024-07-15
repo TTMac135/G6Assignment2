@@ -142,13 +142,25 @@
     //Runs FindFlights when button is clicked
     private void FindFlightsButton()
     {
-        if (origin != null && destination != null && day != null)
+
+        string origFixed = origin;
+        string destFixed = destination;
+        string dayFixed = day;
+
+        //Cleaning user input
+        if (origin != null)
         {
-            //Cleaning user input
-            string origFixed = origin.ToUpper();
-            string destFixed = destination.ToUpper();
-            string dayFixed = char.ToUpper(day[0]) + day.Substring(1).ToLower();
-            matchingFlights = flightFinder.findFlights(origFixed, destFixed, dayFixed);
+            origFixed = origin.ToUpper();
         }
+        if (destination != null)
+        {
+            destFixed = destination.ToUpper();
+        }
+        if (day != null)
+        {
+            dayFixed = char.ToUpper(day[0]) + day.Substring(1).ToLower();
+        }
+        matchingFlights = flightFinder.findFlights(origFixed, destFixed, dayFixed);
+
     }
 }
