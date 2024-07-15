@@ -12,8 +12,8 @@ namespace G6Assignment2.ProblemDomain
         private string _origin;
         private string _destination;
         
-        public Flight(string flightCode, string airline, string origin, string destination, string day, string time, int cost) 
-                      : base (flightCode, airline, day, time, cost)
+        public Flight(string flightCode, string airline, string origin, string destination, string day, string seats, int cost) 
+                      : base (flightCode, airline, day, seats, cost)
         {
             _origin = origin;
             _destination = destination;
