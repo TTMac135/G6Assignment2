@@ -13,7 +13,7 @@ namespace G6Assignment2.ProblemDomain
         private string _airline;
         private string _day;
         private string _time;
-        private string _seats;
+        private int _seats;
         private int _cost;
 
         public FlightManager(string flightCode, string airline, string day, string time, string seats, int cost)
