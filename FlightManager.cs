@@ -86,10 +86,6 @@ namespace G6Assignment2
                 {
                     matches = false;
                 }
-                if (origin == null || destination == null || day == null)
-                {
-                    matches = false;
-                }
 
                 if (matches)
                 {
