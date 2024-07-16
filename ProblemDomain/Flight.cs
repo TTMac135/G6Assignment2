@@ -12,7 +12,7 @@ namespace G6Assignment2.ProblemDomain
         private string _origin;
         private string _destination;
         
-        public Flight(string flightCode, string airline, string origin, string destination, string day, string time, string seats, int cost) 
+        public Flight(string flightCode, string airline, string origin, string destination, string day, string time, int seats, int cost) 
                       : base (flightCode, airline, day, time, seats, cost)
         {
             _origin = origin;
