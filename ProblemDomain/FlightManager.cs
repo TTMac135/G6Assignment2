@@ -16,7 +16,7 @@ namespace G6Assignment2.ProblemDomain
         private int _seats;
         private int _cost;
 
-        public FlightManager(string flightCode, string airline, string day, string time, string seats, int cost)
+        public FlightManager(string flightCode, string airline, string day, string time, int seats, int cost)
         {
             _flightCode = flightCode;
             _airline = airline;
@@ -73,12 +73,12 @@ namespace G6Assignment2.ProblemDomain
             }
         }
 
-        public string Seats
+        public int Seats
         {
             get { return _seats; }
             set
             {
-                if (!string.IsNullOrEmpty(value))
+                if (value >= 0)
                 {
                     _seats = value;
                 }
