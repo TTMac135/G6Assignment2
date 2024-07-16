@@ -10,11 +10,17 @@ namespace G6Assignment2
     class FlightManager
     {
         private List<Flight> flightObjects = new List<Flight>();
+        private List<Airport> airportObjects = new List<Airport>();
         string[] flightArray = Resources.flights.Split('\n');
+        string[] airportsArray = Resources.airports.Split('\n');
 
-        public List<Flight> FlightObjects
+        public List<Flight> FlightObjects 
         {
             get { return flightObjects; }
+        }
+        public List<Airport> AirportObjects
+        {
+            get { return airportObjects; }
         }
 
         //Creates flight objects & appends them to flight list
@@ -40,6 +46,23 @@ namespace G6Assignment2
             }
         }
 
+        public void CreateAirports()
+        {
+            foreach (string airport in airportsArray) 
+            {
+                string[] airportInfo = airport.Split(",");
+                if (airportInfo.Length > 1)
+                {
+                    string airportName = airportInfo[1];
+                    string airportId = airportInfo[0];
+
+                    Airport currentAirport = new Airport(airportId, airportName);
+                    AirportObjects.Add(currentAirport);
+                }
+                
+            }
+        }
+
         //Iterates through the flight objects until it finds the user input origin, destination, and or day
         //Will only add objects to list if at least one input matches an objects origin, destination or day and the other input(s) are null
         //Returns list of matching objects
@@ -51,19 +74,19 @@ namespace G6Assignment2
             {
                 bool matches = true;
 
-                if (origin != null && flight.Origin != origin)
+                if (origin != "Any" && flight.Origin != origin)
                 {
                     matches = false;
                 }
-                if (destination != null && flight.Destination != destination)
+                if (destination != "Any" && flight.Destination != destination)
                 {
                     matches = false;
                 }
-                if (day != null && flight.Day != day)
+                if (day != "Any" && flight.Day != day)
                 {
                     matches = false;
                 }
-                if (origin == null && destination == null && day == null)
+                if (origin == null || destination == null || day == null)
                 {
                     matches = false;
                 }

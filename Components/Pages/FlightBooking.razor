@@ -9,17 +9,38 @@
 
         <div class="form-group">
             <label for="departureAirport">From:</label>
-            <input id="departureAirport" type="text" @bind="origin"/>
+            <select name="From" id = "departureAirport" @bind="origin">
+                <option value="Any">Any</option>
+                @foreach (Airport airport in flightManager.AirportObjects)
+                {
+                    <option value="@airport.AirportId">@airport.AirportName</option>
+                }
+            </select>
         </div>
 
         <div class="form-group">
             <label for="arrivalAirport">To:</label>
-            <input id="arrivalAirport" type="text" @bind="destination"/>
+            <select name="To" id="arrivalAirport" @bind="destination">
+                <option value="Any">Any</option>
+                @foreach (Airport airport in flightManager.AirportObjects)
+                {
+                    <option value="@airport.AirportId">@airport.AirportName</option>
+                }
+            </select>
         </div>
 
         <div class="form-group">
             <label for="day">Day:</label>
-            <input id="day" type="text" @bind="day"/>
+            <select name="Day" id = "day" @bind="day">
+                <option value="Any">Any</option>
+                <option value="Sunday">Sunday</option>
+                <option value="Monday">Monday</option>
+                <option value="Tuesday">Tuesday</option>
+                <option value="Wednesday">Wednesday</option>
+                <option value="Thursday">Thursday</option>
+                <option value="Friday">Friday</option>
+                <option value="Saturday">Saturday</option>
+            </select>
         </div>
 
         <button type="button" @onclick="FindFlightsButton">Find Flights</button>
@@ -100,6 +121,14 @@
         gap: 10px;
     }
 
+    select {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
     .form-group-finder button {
         width: 23%;
     }
@@ -157,36 +186,17 @@
     private string reserveCitizenship;
 
 
-    //Runs CreateFlights when page is loaded
+    //Runs CreateFlights & CreateAirports when page is loaded
     protected override void OnInitialized()
     {
+        flightManager.CreateAirports();
         flightManager.CreateFlights();
     }
     //Runs FindFlights when button is clicked
     private void FindFlightsButton()
     {
-
-        string origFixed = origin;
-        string destFixed = destination;
-        string dayFixed = day;
-
-        //Cleaning user input
-        if (origin != null)
-        {
-            origFixed = origin.ToUpper();
-        }
-        if (destination != null)
-        {
-            destFixed = destination.ToUpper();
-        }
-        if (day != null)
-        {
-            dayFixed = char.ToUpper(day[0]) + day.Substring(1).ToLower();
-        }
-        matchingFlights = flightManager.findFlights(origFixed, destFixed, dayFixed);
+        matchingFlights = flightManager.findFlights(origin, destination, day);
     }
-
-    
 
     // Selects a flight from the list
     private void SelectFlight(Flight flight)
