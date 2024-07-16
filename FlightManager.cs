@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace G6Assignment2
 {
-    class FlightFinder
+    class FlightManager
     {
         private List<Flight> flightObjects = new List<Flight>();
         string[] flightArray = Resources.flights.Split('\n');
