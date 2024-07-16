@@ -69,7 +69,7 @@
         <input id="reserveCitizenship" type="text" @bind="reserveCitizenship"/>
 
         <div class="button-container">
-            <button type="button" @onclick="() => MakeReservation(selectedFlight, reserveName, reserveCitizenship)">Reserve</button>
+            <button type="button" @onclick="() => CreateReservationButton(selectedFlight, reserveName, reserveCitizenship)">Reserve</button>
         </div>
     </form>
 </div>
@@ -145,13 +145,22 @@
     private string destination;
     private string day;
     private List<Flight> matchingFlights = new List<Flight>();
-    private FlightManager flightFinder = new FlightManager();
+    private FlightManager flightManager = new FlightManager();
+    private ReservationManager reservationManager = new ReservationManager();
+    private Flight selectedFlight;
+    private string reserveFlightCode;
+    private string reserveAirline;
+    private string reserveDay;
+    private string reserveTime;
+    private int reserveCost;
+    private string reserveName;
+    private string reserveCitizenship;
 
 
     //Runs CreateFlights when page is loaded
     protected override void OnInitialized()
     {
-        flightFinder.CreateFlights();
+        flightManager.CreateFlights();
     }
     //Runs FindFlights when button is clicked
     private void FindFlightsButton()
@@ -174,17 +183,10 @@
         {
             dayFixed = char.ToUpper(day[0]) + day.Substring(1).ToLower();
         }
-        matchingFlights = flightFinder.findFlights(origFixed, destFixed, dayFixed);
+        matchingFlights = flightManager.findFlights(origFixed, destFixed, dayFixed);
     }
 
-    private Flight selectedFlight;
-    private string reserveFlightCode;
-    private string reserveAirline;
-    private string reserveDay;
-    private string reserveTime;
-    private string reserveCost;
-    private string reserveName;
-    private string reserveCitizenship;
+    
 
     // Selects a flight from the list
     private void SelectFlight(Flight flight)
@@ -194,34 +196,14 @@
         reserveAirline = flight.Airline;
         reserveDay = flight.Day;
         reserveTime = flight.Time;
-        reserveCost = flight.Cost.ToString();
+        reserveCost = flight.Cost;
     }
 
-    private void MakeReservation(Flight selectedFlight, string reserveName, string reserveCitizenship)
+    private void CreateReservationButton(Flight selectedFlight, string reserveName, string reserveCitizenship)
     {
-        // Check if a flight is selected and required fields are filled
-        if (selectedFlight != null && reserveName != null && reserveCitizenship != null)
-        {
-            string reservationCode = GenerateReservationCode();
-            
             // Create a new Reservation object
-            Reservation reservation = new Reservation(
-                reservationCode,
-                selectedFlight.FlightCode,
-                selectedFlight.Airline,
-                selectedFlight.Day,
-                selectedFlight.Time,
-                selectedFlight.Seats,
-                selectedFlight.Cost,
-                reserveName,
-                reserveCitizenship,
-                true
-            );
-        }
+            reservationManager.MakeReservation(selectedFlight, reserveName, reserveCitizenship);
     }
 
-    private string GenerateReservationCode() // PLACEHOLDER
-    {
-        return ""; // PLACEHOLDER!!!!
-    }
+    
 }
