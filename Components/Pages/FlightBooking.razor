@@ -170,9 +170,9 @@
 </style>
 
 @code {
-    private string origin;
-    private string destination;
-    private string day;
+    private string origin = "Any";
+    private string destination = "Any";
+    private string day = "Any";
     private List<Flight> matchingFlights = new List<Flight>();
     private FlightManager flightManager = new FlightManager();
     private ReservationManager reservationManager = new ReservationManager();
