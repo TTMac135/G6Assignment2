@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace G6Assignment2.ProblemDomain
 {
     //Parent Superclass of Flight and Reservation
-    internal abstract class FlightManager
+    internal abstract class ObjectCreator
     {
         private string _flightCode;
         private string _airline;
@@ -16,7 +16,7 @@ namespace G6Assignment2.ProblemDomain
         private int _seats;
         private int _cost;
 
-        public FlightManager(string flightCode, string airline, string day, string time, int seats, int cost)
+        public ObjectCreator(string flightCode, string airline, string day, string time, int seats, int cost)
         {
             _flightCode = flightCode;
             _airline = airline;

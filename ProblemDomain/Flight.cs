@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace G6Assignment2.ProblemDomain
 {
-    internal class Flight : FlightManager
+    internal class Flight : ObjectCreator
     {
 
         private string _origin;
