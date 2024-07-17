@@ -32,17 +32,36 @@ namespace G6Assignment2
                 string day = flight.Day;
                 int cost = flight.Cost;
                 string time = flight.Time;
-                bool status;
+                int seats = flight.Seats;
+                bool status = true;
 
-                //Reservation reservation = new Reservation(reserveCode, flightCode, airline, day, cost, time, name, citizenship, status)
+                reservation = new Reservation(reserveCode, flightCode, airline, day, time, seats, cost, name, citizenship, status);
                 //add to binary file
             }
             return reservation;
         }
 
-        private string GenerateReservationCode() // PLACEHOLDER
+        private string GenerateReservationCode()
         {
-            return ""; // PLACEHOLDER!!!!
+            string code = "";
+            List<string> chars = new List<string>() { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m",
+                "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+
+            Random rnd = new Random();
+
+            for (int i = 1; i < 6; i++)
+            {
+                if (i == 1)
+                {
+                    code += chars[rnd.Next(chars.Count)].ToUpper();
+                }
+                else
+                {
+                    code += Convert.ToString(rnd.Next(0, 9));
+                }
+            }
+
+            return code;
         }
 
     }
