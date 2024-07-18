@@ -14,7 +14,19 @@ namespace G6Assignment2
 
         public Reservation? MakeReservation(Flight flight, string name, string citizenship)
         {
-            string reservationCode = GenerateReservationCode();
+            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "reservations.bin");
+            if (!File.Exists(filePath))
+            {
+                FileStream fs = new FileStream(filePath, FileMode.Create);
+                fs.Close();
+            }
+            /*
+            else 
+            {
+                load the file and deserialize onto Reservation List   
+            }
+            */
+
             Reservation? reservation = null;
             if (flight == null || flight.Seats == 0)
             {
@@ -35,8 +47,10 @@ namespace G6Assignment2
                 int seats = flight.Seats;
                 bool status = true;
 
-                reservation = new Reservation(reserveCode, flightCode, airline, day, time, seats, cost, name, citizenship, status);
-                //add to binary file
+                //reservation = new Reservation(reserveCode, flightCode, airline, day, time, seats, cost, name, citizenship, status);
+
+                //serialize into reservations.bin 
+                
             }
             return reservation;
         }
