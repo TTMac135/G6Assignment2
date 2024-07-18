@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace G6Assignment2.ProblemDomain
 {
+    [Serializable]
     class Reservation : ObjectCreator
     {
         // When a travel agent selects a flight from the list, the text fields are populated with the selected
