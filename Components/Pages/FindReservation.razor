@@ -1,4 +1,5 @@
 ﻿@page "/ReservationFinder"
+@using G6Assignment2.ProblemDomain
 
 <h3>Find Reservation</h3>
 
@@ -7,26 +8,77 @@
 
         <div class="form-group">
             <label for="reservationCode">Code:</label>
-            <input id="reservationCode" type="text" />
+            <select name="Code" id="reservationCode" @bind="reserveCode">
+                <option value="Any">Any</option>
+                @foreach (Reservation reservation in reservationManager.ReservationObjects)
+                {
+                    <option value="@reservation.ReservationCode">@reservation.ReservationCode</option>
+                }
+            </select>
         </div>
 
         <div class="form-group">
             <label for="airline">Airline:</label>
-            <input id="airline" type="text" />
+            <select name="airline" id="airline" @bind="airline">
+                <option value="Any">Any</option>
+                @foreach (Reservation reservation in reservationManager.ReservationObjects)
+                {
+                    bool airlineUsed = false;
+                    //Making sure only one of a duplicate option appears in the list
+                    foreach (string usedAirline in usedAirlines)
+                    {
+                        if (reservation.Airline == usedAirline)
+                            airlineUsed = true;
+                    }
+                    if (airlineUsed == false)
+                    {
+                        <option value="@reservation.Airline">@reservation.Airline</option>
+                        usedAirlines.Add(reservation.Airline);
+                    }
+                }
+            </select>
         </div>
 
         <div class="form-group">
             <label for="name">Name:</label>
-            <input id="name" type="text" />
+            <select name="name" id="name" @bind="name">
+                <option value="Any">Any</option>
+                @foreach (Reservation reservation in reservationManager.ReservationObjects)
+                {
+                    bool nameUsed = false;
+                    //Making sure only one of a duplicate option appears in the list
+                    foreach (string usedName in usedNames)
+                    {
+                        if (reservation.Name == usedName)
+                            nameUsed = true;
+                    }
+                    if (nameUsed == false)
+                    {
+                        <option value="@reservation.Name">@reservation.Name</option>
+                        usedNames.Add(reservation.Name);
+                    }
+                }
+            </select>
         </div>
 
-        <button type="button">Find Reservations</button>
+        <button type="button" @onclick="FindReservationsButton">Find Reservations</button>
     </form>
 
     <h4>Reservations</h4>
     <div class="scrollable-list">
         <table>
             <tbody>
+                @foreach (Reservation reservation in matchingReservations)
+                {
+                    string rowClass = "";
+                    if (reservation == selectedReservation)
+                    {
+                        rowClass = "selected-row";
+                    }
+                    <tr class="@rowClass" @onclick="() => SelectReservation(reservation)">
+                        <td>@reservation.ToString()</td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>
@@ -92,20 +144,20 @@
         gap: 10px;
     }
 
-    .form-group-reservation .form-group {
-        width: 25%;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+        .form-group-reservation .form-group {
+            width: 25%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-    .form-group-reservation button {
-        width: 23%;
-    }
+        .form-group-reservation button {
+            width: 23%;
+        }
 
     .form-group input {
         width: 100%;
-     }
+    }
 
     .form-group-reserve label, .form-group-reserve input {
         display: block;
@@ -133,5 +185,49 @@
 </style>
 
 @code {
-    
+    private string reserveCode = "Any";
+    private string airline = "Any";
+    private string name = "Any";
+    private ReservationManager reservationManager = new ReservationManager();
+    private List<Reservation> matchingReservations = new List<Reservation>();
+    private Reservation selectedReservation;
+    List<string> usedAirlines = new List<string>();
+    List<string> usedNames = new List<string>();
+    private string reservationCode;
+    private string reserveFlightCode;
+    private string reserveAirline;
+    private int reserveCost;
+    private string reserveName;
+    private string reserveCitizenship;
+    private string reserveStatus;
+
+    protected override void OnInitialized()
+    {
+        reservationManager.LoadReservations();
+    }
+
+    private void SelectReservation(Reservation reservation)
+    {
+        selectedReservation = reservation;
+        reservationCode = reservation.ReservationCode;
+        reserveFlightCode = reservation.FlightCode;
+        reserveAirline = reservation.Airline;
+        reserveCost = reservation.Cost;
+        reserveName = reservation.Name;
+        reserveCitizenship = reservation.Citizenship;
+        if (reservation.Status)
+        {
+            reserveStatus = "Active";
+        }
+        else
+        {
+            reserveStatus = "Inactive";
+        }
+    }
+
+    //Runs FindReservation when button is clicked
+    private void FindReservationsButton()
+    {
+        matchingReservations = reservationManager.FindReservation(reserveCode, airline, name);
+    }
 }
