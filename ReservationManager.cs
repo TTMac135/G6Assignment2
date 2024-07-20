@@ -4,6 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Linq;
+using System.IO;
+
 
 namespace G6Assignment2
 {
@@ -14,18 +20,24 @@ namespace G6Assignment2
 
         public Reservation? MakeReservation(Flight flight, string name, string citizenship)
         {
-            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "reservations.bin");
+            List<Reservation> reservations = new List<Reservation>();
+            string filePath = @"C:\Users\luism\Desktop\other\reservations.json";
             if (!File.Exists(filePath))
             {
-                FileStream fs = new FileStream(filePath, FileMode.Create);
-                fs.Close();
+                using (FileStream fs = new FileStream(filePath, FileMode.Create))
+                {
+                    //create file if it doesnt exist
+                }
+                
             }
-            /*
+            
             else 
             {
-                load the file and deserialize onto Reservation List   
+                string reservationsString = File.ReadAllText(filePath);
+
+                reservations = JsonConvert.DeserializeObject<List<Reservation>>(reservationsString);
             }
-            */
+            
 
             Reservation? reservation = null;
             if (flight == null || flight.Seats == 0)
@@ -47,10 +59,13 @@ namespace G6Assignment2
                 int seats = flight.Seats;
                 bool status = true;
 
-                //reservation = new Reservation(reserveCode, flightCode, airline, day, time, seats, cost, name, citizenship, status);
+                reservation = new Reservation(reserveCode, flightCode, airline, day, time, seats, cost, name, citizenship, status);
 
-                //serialize into reservations.bin 
-                
+                reservations.Add(reservation);
+
+                string reservationsString = JsonConvert.SerializeObject(reservations, Formatting.Indented);
+
+                File.WriteAllText(filePath, reservationsString);
             }
             return reservation;
         }
