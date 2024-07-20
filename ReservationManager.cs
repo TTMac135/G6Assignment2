@@ -29,6 +29,7 @@ namespace G6Assignment2
             get { return reservationObjects; }
         }
 
+        //Loads reservations from the Json file
         public void LoadReservations()
         {
             if (File.Exists(filePath))
@@ -42,6 +43,7 @@ namespace G6Assignment2
             }
         }
 
+        //Add a comment here
         public Reservation? MakeReservation(Flight flight, string name, string citizenship)
         {
             
@@ -87,6 +89,7 @@ namespace G6Assignment2
             return reservation;
         }
 
+        //Generates a reservation code based on the format "LDDDD" L being letter, d being digit
         private string GenerateReservationCode()
         {
             string code = "";
@@ -110,6 +113,9 @@ namespace G6Assignment2
             return code;
         }
 
+        //Iterates through the flight objects until it finds the user input reservationcode, airline, or name
+        //Will only add objects to list if at least one input matches an objects reservationcode, airline, or name and the other input(s) are "Any"
+        //Returns list of matching objects
         public List<Reservation> FindReservation(string reserveCode, string airline, string name)
         {
             LoadReservations();
