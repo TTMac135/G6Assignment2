@@ -43,6 +43,15 @@ namespace G6Assignment2
             }
         }
 
+        public void SaveReservations()
+        {
+            string reservationsString = JsonSerializer.Serialize(reservationObjects);
+
+            File.WriteAllText(filePath, reservationsString);
+        }
+            
+
+
         //Add a comment here
         public Reservation? MakeReservation(Flight flight, string name, string citizenship)
         {
@@ -82,9 +91,7 @@ namespace G6Assignment2
 
                 reservationObjects.Add(reservation);
 
-                string reservationsString = JsonSerializer.Serialize(reservationObjects);
-
-                File.WriteAllText(filePath, reservationsString);
+                SaveReservations();
             }
             return reservation;
         }
@@ -98,15 +105,33 @@ namespace G6Assignment2
 
             Random rnd = new Random();
 
-            for (int i = 1; i < 6; i++)
+            while (true)
             {
-                if (i == 1)
+                //creates code
+                for (int i = 1; i < 6; i++)
                 {
-                    code += chars[rnd.Next(chars.Count)].ToUpper();
+                    if (i == 1)
+                    {
+                        code += chars[rnd.Next(chars.Count)].ToUpper();
+                    }
+                    else
+                    {
+                        code += Convert.ToString(rnd.Next(0, 9));
+                    }
                 }
-                else
+
+                //checks that it doesnt match with another code generated prior
+                bool match = false;
+                foreach(Reservation rev in  reservationObjects) 
                 {
-                    code += Convert.ToString(rnd.Next(0, 9));
+                    if(rev.ReservationCode == code) 
+                    {  
+                        match = true;
+                    }
+                }
+                if(!match)
+                {
+                    break;
                 }
             }
 
@@ -147,5 +172,22 @@ namespace G6Assignment2
             return matchingReservations;
         }
 
+        public void UpdateReservation(Reservation updatedReservation) 
+        {
+            
+            foreach(Reservation reservation in reservationObjects) 
+            {
+                if(reservation.ReservationCode == updatedReservation.ReservationCode) 
+                {
+                    reservation.Name = updatedReservation.Name; 
+                    reservation.Citizenship = updatedReservation.Citizenship;
+                    reservation.Status = updatedReservation.Status;
+                    
+                }
+            }
+
+            SaveReservations();
+            
+        }
     }
 }

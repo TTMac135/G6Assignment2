@@ -117,7 +117,14 @@
 
         <div class="form-group">
             <label for="status">Status:</label>
-            <input id="status" type="text" @bind="reserveStatus" />
+            <select name="status" id="status" @bind="reserveStatus">
+                <option value="Active">
+                    Active
+                </option>
+                <option value="Inactive">
+                    Inactive
+                </option>
+            </select>
         </div>
 
         <div class="button-container">
@@ -237,8 +244,23 @@
         matchingReservations = reservationManager.FindReservation(reserveCode, airline, name);
     }
 
-    private void UpdateReservation() // Placeholder
+    private void UpdateReservation() 
     {
-        
+        //updates the reservation to whatever the user inputs
+        selectedReservation.Name = reserveName;
+        selectedReservation.Citizenship = reserveCitizenship;
+        if (reserveStatus == "Active")
+        {
+            selectedReservation.Status = true;   
+        }
+        if (reserveStatus == "Inactive")
+        {
+            selectedReservation.Status = false;
+        }
+        reservationManager.UpdateReservation(selectedReservation);
+
+        //reloads the list or reservations to show the newly updated reservation
+        reservationManager.LoadReservations();
+        matchingReservations = reservationManager.FindReservation(selectedReservation.ReservationCode, selectedReservation.Airline, selectedReservation.Name);
     }
 }
