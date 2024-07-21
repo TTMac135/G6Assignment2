@@ -211,8 +211,15 @@
 
     private void CreateReservationButton(Flight selectedFlight, string reserveName, string reserveCitizenship)
     {
-            // Create a new Reservation object
+        // Create a new Reservation object
+        try
+        {
             reservationManager.MakeReservation(selectedFlight, reserveName, reserveCitizenship);
+        }
+        catch(InvalidReservation ex) //print error code if exception
+        {
+            Console.WriteLine(ex.ErrorCode);
+        }
     }
 
     
