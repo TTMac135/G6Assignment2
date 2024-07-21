@@ -45,7 +45,7 @@ namespace G6Assignment2.ProblemDomain
 
         public override string ToString()
         {
-            return $"{FlightCode}, {Airline}, {Origin}, {Destination}, {Day}, {Time}, {Seats}, {Cost}";
+            return $"{FlightCode},{Airline},{Origin},{Destination},{Day},{Time},{Seats},{Cost}";
         }
     }
 }

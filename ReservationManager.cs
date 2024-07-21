@@ -18,6 +18,7 @@ namespace G6Assignment2
 
         private string filePath = @"C:\Other\reservations.json";
         private List<Reservation> reservationObjects = new List<Reservation>();
+        private FlightManager flightManager = new FlightManager();
 
         public ReservationManager()
         {
@@ -49,9 +50,6 @@ namespace G6Assignment2
 
             File.WriteAllText(filePath, reservationsString);
         }
-            
-
-
         
         public Reservation? MakeReservation(Flight flight, string name, string citizenship)
         {
@@ -93,7 +91,6 @@ namespace G6Assignment2
                 reservationObjects.Add(reservation);
 
                 flight.Seats--;
-                //unfinished code, need updateFlight (and probably saveFlight too lol)
 
                 SaveReservations();
 

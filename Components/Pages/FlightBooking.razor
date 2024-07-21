@@ -43,7 +43,9 @@
             </select>
         </div>
 
-        <button type="button" @onclick="FindFlightsButton">Find Flights</button>
+        <div class="form-group button-container">
+            <button type="button" @onclick="FindFlightsButton">Find Flights</button>
+        </div>
     </form>
 
  <h4>Flights</h4>
@@ -114,12 +116,18 @@
         gap: 10px;
     }
 
-    .form-group-finder .form-group {
-        width: 25%;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-    }
+        .form-group-finder .form-group {
+            width: 25%;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-group-finder .button-group {
+            display: flex;
+            align-items: flex-end;
+            margin-left: 25px;
+        }
 
     select {
         width: 100%;
@@ -129,11 +137,7 @@
         font-size: 1rem;
     }
 
-    .form-group-finder button {
-        width: 23%;
-    }
-
-    .form-group-finder input {
+    .form-group input {
         width: 100%;
     }
 
@@ -154,19 +158,20 @@
         padding: 15px;
     }
 
-    button {
+    .button-container button,
+    .button-group button {
+        padding: 0.5rem 1rem;
         border-radius: 4px;
-        padding-left: 100px;
-        padding-right: 100px;
-        display: inline-block;
         background-color: blue;
         color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
     }
 
     .selected-row {
         background-color: lightblue;
     }
-    
 </style>
 
 @code {

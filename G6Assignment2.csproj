@@ -58,6 +58,16 @@
     </ItemGroup>
 
     <ItemGroup>
+      <None Remove="Resources\flights.csv" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="Resources\flights.csv">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
         <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
         <PackageReference Include="Microsoft.AspNetCore.Components.WebView.Maui" Version="$(MauiVersion)" />

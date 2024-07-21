@@ -6,7 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace G6Assignment2
-{
+{   
+    //Allows for creating flight objects, airport objects, and finding flight objects
     class FlightManager
     {
         private List<Flight> flightObjects = new List<Flight>();
