@@ -52,10 +52,10 @@ namespace G6Assignment2
             
 
 
-        //Add a comment here
+        
         public Reservation? MakeReservation(Flight flight, string name, string citizenship)
         {
-            
+            //Creates the JSON file if it doesnt exist already
             if (!File.Exists(filePath))
             {
                 using (FileStream fs = new FileStream(filePath, FileMode.Create))
@@ -68,6 +68,7 @@ namespace G6Assignment2
 
 
             Reservation? reservation = null;
+            //Throws exceptions if one of the fields is null
             if (flight == null || flight.Seats == 0)
             {
                 throw new InvalidReservation(flight);
@@ -76,7 +77,7 @@ namespace G6Assignment2
             {
                 throw new InvalidReservation(name);
             }
-            else
+            else //creates the reservation and saves it otherwise
             {
                 string reserveCode = GenerateReservationCode();
                 string flightCode = flight.FlightCode;
@@ -91,7 +92,11 @@ namespace G6Assignment2
 
                 reservationObjects.Add(reservation);
 
+                flight.Seats--;
+                //unfinished code, need updateFlight (and probably saveFlight too lol)
+
                 SaveReservations();
+
             }
             return reservation;
         }
