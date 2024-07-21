@@ -148,7 +148,7 @@ namespace G6Assignment2
             LoadReservations();
             List<Reservation> matchingReservations = new List<Reservation>();
 
-            foreach (var reservation in reservationObjects)
+            foreach (Reservation reservation in reservationObjects)
             {
                 bool matches = true;
 
