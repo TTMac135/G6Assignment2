@@ -87,41 +87,41 @@
     <form class="form-group-reserve">
         <div class="form-group">
             <label for="reservationCode">Reservation Code:</label>
-            <input id="reservationCode" type="text" />
+            <input id="reservationCode" type="text" @bind="reservationCode" readonly />
         </div>
 
         <div class="form-group">
             <label for="flightCode">Flight Code:</label>
-            <input id="flightCode" type="text" />
+            <input id="flightCode" type="text" @bind="reserveFlightCode" readonly />
         </div>
 
         <div class="form-group">
             <label for="airline">Airline:</label>
-            <input id="airline" type="text" />
+            <input id="airline" type="text" @bind="reserveAirline" readonly />
         </div>
 
         <div class="form-group">
             <label for="cost">Cost:</label>
-            <input id="cost" type="text" />
+            <input id="cost" type="text" @bind="reserveCost" readonly />
         </div>
 
         <div class="form-group">
             <label for="name">Name:</label>
-            <input id="name" type="text" />
+            <input id="name" type="text" @bind="reserveName" />
         </div>
 
         <div class="form-group">
             <label for="citizenship">Citizenship:</label>
-            <input id="citizenship" type="text" />
+            <input id="citizenship" type="text" @bind="reserveCitizenship" />
         </div>
 
         <div class="form-group">
             <label for="status">Status:</label>
-            <input id="status" type="text" />
+            <input id="status" type="text" @bind="reserveStatus" />
         </div>
 
         <div class="button-container">
-            <button type="button">Save</button>
+            <button type="button" @onclick="UpdateReservation">Save</button>
         </div>
     </form>
 </div>
@@ -144,16 +144,16 @@
         gap: 10px;
     }
 
-        .form-group-reservation .form-group {
-            width: 25%;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+    .form-group-reservation .form-group {
+        width: 25%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
 
-        .form-group-reservation button {
-            width: 23%;
-        }
+    .form-group-reservation button {
+        width: 23%;
+    }
 
     .form-group input {
         width: 100%;
@@ -172,6 +172,8 @@
     .scrollable-list {
         max-height: 300px;
         overflow-y: scroll;
+        border: 1px solid black;
+        padding: 15px;
     }
 
     button {
@@ -181,6 +183,10 @@
         display: inline-block;
         background-color: blue;
         color: white;
+    }
+
+    .selected-row {
+        background-color: lightblue;
     }
 </style>
 
@@ -229,5 +235,10 @@
     private void FindReservationsButton()
     {
         matchingReservations = reservationManager.FindReservation(reserveCode, airline, name);
+    }
+
+    private void UpdateReservation() // Placeholder
+    {
+        
     }
 }
