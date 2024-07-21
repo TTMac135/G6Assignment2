@@ -21,16 +21,10 @@
             <label for="airline">Airline:</label>
             <select name="airline" id="airline" @bind="airline">
                 <option value="Any">Any</option>
+                // Making sure only one of a duplicate option appears in the list
                 @foreach (Reservation reservation in reservationManager.ReservationObjects)
                 {
-                    bool airlineUsed = false;
-                    // Making sure only one of a duplicate option appears in the list
-                    foreach (string usedAirline in usedAirlines)
-                    {
-                        if (reservation.Airline == usedAirline)
-                            airlineUsed = true;
-                    }
-                    if (!airlineUsed)
+                    if (!usedAirlines.Contains(reservation.Airline))
                     {
                         <option value="@reservation.Airline">@reservation.Airline</option>
                         usedAirlines.Add(reservation.Airline);
@@ -42,17 +36,11 @@
         <div class="form-group">
             <label for="name">Name:</label>
             <select name="name" id="name" @bind="name">
-                <option value="Any">Any</option>
+                <option value="Any">Any</option> 
+                // Making sure only one of a duplicate option appears in the list
                 @foreach (Reservation reservation in reservationManager.ReservationObjects)
                 {
-                    bool nameUsed = false;
-                    // Making sure only one of a duplicate option appears in the list
-                    foreach (string usedName in usedNames)
-                    {
-                        if (reservation.Name == usedName)
-                            nameUsed = true;
-                    }
-                    if (!nameUsed)
+                    if (!usedNames.Contains(reservation.Name))
                     {
                         <option value="@reservation.Name">@reservation.Name</option>
                         usedNames.Add(reservation.Name);
@@ -227,6 +215,8 @@
     protected override void OnInitialized()
     {
         reservationManager.LoadReservations();
+        usedAirlines.Clear();
+        usedNames.Clear();
     }
 
     private void SelectReservation(Reservation reservation)
