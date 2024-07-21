@@ -4,40 +4,59 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
 using System.IO;
+using System.Text.Json;
 
 
 namespace G6Assignment2
 {
     //Allows for making reservations, editting them, and searching for them
+    //BinaryFormatter is obsolete and impossible to use here. Using JSON instead.
+
     internal class ReservationManager
     {
-        public ReservationManager() { }
 
+        private string filePath = @"C:\Other\reservations.json";
+        private List<Reservation> reservationObjects = new List<Reservation>();
+
+        public ReservationManager()
+        {
+            LoadReservations();
+        }
+
+        public List<Reservation> ReservationObjects
+        {
+            get { return reservationObjects; }
+        }
+
+        //Loads reservations from the Json file
+        public void LoadReservations()
+        {
+            if (File.Exists(filePath))
+            {
+                string reservationsString = File.ReadAllText(filePath);
+                reservationObjects = JsonSerializer.Deserialize<List<Reservation>>(reservationsString);
+            }
+            else
+            {
+                reservationObjects = new List<Reservation>();
+            }
+        }
+
+        //Add a comment here
         public Reservation? MakeReservation(Flight flight, string name, string citizenship)
         {
-            List<Reservation> reservations = new List<Reservation>();
-            string filePath = @"C:\Users\luism\Desktop\other\reservations.json";
+            
             if (!File.Exists(filePath))
             {
                 using (FileStream fs = new FileStream(filePath, FileMode.Create))
                 {
-                    //create file if it doesnt exist
+                    // Creating an empty JSON File
+                    byte[] emptyJsonArray = Encoding.UTF8.GetBytes("[]");
+                    fs.Write(emptyJsonArray, 0, emptyJsonArray.Length);
                 }
-                
             }
-            
-            else 
-            {
-                string reservationsString = File.ReadAllText(filePath);
 
-                reservations = JsonConvert.DeserializeObject<List<Reservation>>(reservationsString);
-            }
-            
 
             Reservation? reservation = null;
             if (flight == null || flight.Seats == 0)
@@ -61,15 +80,16 @@ namespace G6Assignment2
 
                 reservation = new Reservation(reserveCode, flightCode, airline, day, time, seats, cost, name, citizenship, status);
 
-                reservations.Add(reservation);
+                reservationObjects.Add(reservation);
 
-                string reservationsString = JsonConvert.SerializeObject(reservations, Formatting.Indented);
+                string reservationsString = JsonSerializer.Serialize(reservationObjects);
 
                 File.WriteAllText(filePath, reservationsString);
             }
             return reservation;
         }
 
+        //Generates a reservation code based on the format "LDDDD" L being letter, d being digit
         private string GenerateReservationCode()
         {
             string code = "";
@@ -91,6 +111,40 @@ namespace G6Assignment2
             }
 
             return code;
+        }
+
+        //Iterates through the flight objects until it finds the user input reservationcode, airline, or name
+        //Will only add objects to list if at least one input matches an objects reservationcode, airline, or name and the other input(s) are "Any"
+        //Returns list of matching objects
+        public List<Reservation> FindReservation(string reserveCode, string airline, string name)
+        {
+            LoadReservations();
+            List<Reservation> matchingReservations = new List<Reservation>();
+
+            foreach (var reservation in reservationObjects)
+            {
+                bool matches = true;
+
+                if (reserveCode != "Any" && reservation.ReservationCode != reserveCode)
+                {
+                    matches = false;
+                }
+                if (airline != "Any" && reservation.Airline != airline)
+                {
+                    matches = false;
+                }
+                if (name != "Any" && reservation.Name != name)
+                {
+                    matches = false;
+                }
+
+                if (matches)
+                {
+                    matchingReservations.Add(reservation);
+                }
+            }
+
+            return matchingReservations;
         }
 
     }
