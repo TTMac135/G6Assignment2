@@ -24,11 +24,7 @@
                 // Making sure only one of a duplicate option appears in the list
                 @foreach (Reservation reservation in reservationManager.ReservationObjects)
                 {
-                    if (!usedAirlines.Contains(reservation.Airline))
-                    {
-                        <option value="@reservation.Airline">@reservation.Airline</option>
-                        usedAirlines.Add(reservation.Airline);
-                    }
+                    <option value="@reservation.Airline">@reservation.Airline</option>
                 }
             </select>
         </div>
@@ -37,14 +33,9 @@
             <label for="name">Name:</label>
             <select name="name" id="name" @bind="name">
                 <option value="Any">Any</option> 
-                // Making sure only one of a duplicate option appears in the list
                 @foreach (Reservation reservation in reservationManager.ReservationObjects)
                 {
-                    if (!usedNames.Contains(reservation.Name))
-                    {
-                        <option value="@reservation.Name">@reservation.Name</option>
-                        usedNames.Add(reservation.Name);
-                    }
+                    <option value="@reservation.Name">@reservation.Name</option>
                 }
             </select>
         </div>
@@ -202,8 +193,6 @@
     private ReservationManager reservationManager = new ReservationManager();
     private List<Reservation> matchingReservations = new List<Reservation>();
     private Reservation selectedReservation;
-    List<string> usedAirlines = new List<string>();
-    List<string> usedNames = new List<string>();
     private string reservationCode;
     private string reserveFlightCode;
     private string reserveAirline;
@@ -215,8 +204,6 @@
     protected override void OnInitialized()
     {
         reservationManager.LoadReservations();
-        usedAirlines.Clear();
-        usedNames.Clear();
     }
 
     private void SelectReservation(Reservation reservation)
