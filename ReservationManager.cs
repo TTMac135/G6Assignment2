@@ -18,7 +18,6 @@ namespace G6Assignment2
 
         private string filePath = @"C:\Other\reservations.json";
         private List<Reservation> reservationObjects = new List<Reservation>();
-        private FlightManager flightManager = new FlightManager();
 
         public ReservationManager()
         {
